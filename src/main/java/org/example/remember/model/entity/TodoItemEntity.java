@@ -21,6 +21,25 @@ public class TodoItemEntity extends AuditEntity {
   @Column(name = "dead_line")
   private LocalDateTime deadLine;
 
+  public TodoItemEntity() {
+  }
+
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public TodoItemEntity(String id, String title, String description, Integer priority, LocalDateTime deadLine) {
+    this.id = id;
+    this.title = title;
+    this.description = description;
+    this.priority = priority;
+    this.deadLine = deadLine;
+  }
+
+  public TodoItemEntity(String title, String description, Integer priority, LocalDateTime deadLine) {
+    this(null, title, description, priority, deadLine);
+  }
+
   public String getId() {
     return id;
   }
