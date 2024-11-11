@@ -9,16 +9,19 @@ public class AuditEntity {
 
   @Column(name = "created", updatable = false)
   private LocalDateTime createdAt;
-  @Column(name = "last_modifier", insertable = false)
+  @Column(name = "last_modifier")
   private LocalDateTime updatedAt;
 
   @PrePersist
   void onPersist(){
-    this.createdAt = LocalDateTime.now();
+    LocalDateTime now = LocalDateTime.now();
+    setCreatedAt(now);
+    setUpdatedAt(now);
   }
 
+  @PreUpdate
   void onUpdate(){
-    this.updatedAt = LocalDateTime.now();
+    setUpdatedAt(LocalDateTime.now());
   }
 
   public LocalDateTime getCreatedAt() {
@@ -27,5 +30,13 @@ public class AuditEntity {
 
   public LocalDateTime getUpdatedAt() {
     return updatedAt;
+  }
+
+  public void setCreatedAt(LocalDateTime createdAt) {
+    this.createdAt = createdAt;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }
