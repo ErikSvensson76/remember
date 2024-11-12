@@ -1,4 +1,4 @@
-package org.example.remember.service.calendar;
+package org.example.remember.service.calender;
 
 import org.example.remember.model.dto.DateWithWeek;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 @Service
-public class CalendarService {
+public class CalenderService {
 
 
   public Supplier<List<LocalDate>> getYear(final Integer year){

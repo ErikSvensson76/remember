@@ -1,4 +1,4 @@
-package org.example.remember.service.calendar;
+package org.example.remember.service.calender;
 
 import org.example.remember.model.dto.DateWithWeek;
 import org.junit.jupiter.api.Test;
@@ -15,10 +15,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest(classes = CalendarService.class)
-class CalendarServiceTest {
+@SpringBootTest(classes = CalenderService.class)
+class CalenderServiceTest {
 
-  @Autowired CalendarService underTest;
+  @Autowired
+  CalenderService underTest;
 
 
   @Test
