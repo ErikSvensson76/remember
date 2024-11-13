@@ -1,6 +1,6 @@
 package org.example.remember.service.calender;
 
-import org.example.remember.model.dto.DateWithWeek;
+import org.example.remember.model.dto.ViewDate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -36,7 +36,7 @@ class CalenderServiceTest {
   @EnumSource(Month.class)
   void getMonths(Month month){
     int year = Year.now().getValue();
-     List<DateWithWeek> result = underTest.getMonth(year,month.getValue()).get();
+     List<ViewDate> result = underTest.getMonth(year,month.getValue()).get();
      assertNotNull(result);
 
   }

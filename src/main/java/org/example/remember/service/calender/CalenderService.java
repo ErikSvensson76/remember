@@ -1,12 +1,11 @@
 package org.example.remember.service.calender;
 
-import org.example.remember.model.dto.DateWithWeek;
+import org.example.remember.model.dto.ViewDate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -28,7 +27,7 @@ public class CalenderService {
     };
   }
 
-  public Supplier<List<DateWithWeek>> getMonth(final Integer year, final Integer month){
+  public Supplier<List<ViewDate>> getMonth(final Integer year, final Integer month){
     if(month == null) throw new IllegalArgumentException("month is null");
     return () -> {
       Year currentYear = year == null ? Year.now() : Year.of(year);
@@ -42,12 +41,8 @@ public class CalenderService {
             calendarStartDate,
             date -> date.isBefore(calendarEndDate.plusDays(1)),
             localDate -> localDate.plusDays(1))
-          .map(date ->
-              new DateWithWeek(
-                  date,
-                  date.get(WeekFields.ISO.weekOfWeekBasedYear())
-              )
-          ).toList();
+          .map(date -> new ViewDate(date,month,year))
+          .toList();
     };
   }
 
