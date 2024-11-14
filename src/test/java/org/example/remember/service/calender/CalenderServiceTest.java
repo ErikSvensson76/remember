@@ -1,6 +1,5 @@
 package org.example.remember.service.calender;
 
-import org.example.remember.model.dto.ViewDate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
@@ -12,15 +11,13 @@ import java.time.Month;
 import java.time.Year;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = CalenderService.class)
 class CalenderServiceTest {
 
   @Autowired
   CalenderService underTest;
-
 
   @Test
   void getYear() {
@@ -36,11 +33,10 @@ class CalenderServiceTest {
   @EnumSource(Month.class)
   void getMonths(Month month){
     int year = Year.now().getValue();
-     List<ViewDate> result = underTest.getMonth(year,month.getValue()).get();
+     var result = underTest.getMonth(year,month.getValue()).get();
      assertNotNull(result);
+     assertTrue(result.keySet().size() > 4 && result.keySet().size() < 7);
 
   }
-
-
 
 }
