@@ -8,7 +8,9 @@ import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -27,7 +29,7 @@ public class CalenderService {
     };
   }
 
-  public Supplier<List<ViewDate>> getMonth(final Integer year, final Integer month){
+  public Supplier<Map<Integer, List<ViewDate>>> getMonth(final Integer year, final Integer month){
     if(month == null) throw new IllegalArgumentException("month is null");
     return () -> {
       Year currentYear = year == null ? Year.now() : Year.of(year);
@@ -41,8 +43,8 @@ public class CalenderService {
             calendarStartDate,
             date -> date.isBefore(calendarEndDate.plusDays(1)),
             localDate -> localDate.plusDays(1))
-          .map(date -> new ViewDate(date,month,year))
-          .toList();
+          .map(ViewDate::new)
+          .collect(Collectors.groupingBy(ViewDate::getWeekNumber));
     };
   }
 
