@@ -1,5 +1,6 @@
 package org.example.remember.controller;
 
+import org.example.remember.model.dto.Pair;
 import org.example.remember.model.dto.ViewDate;
 import org.example.remember.service.calender.CalenderService;
 import org.springframework.stereotype.Controller;
@@ -7,15 +8,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.annotation.SessionScope;
 
-import java.time.Year;
-import java.time.YearMonth;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/calender")
+@RequestMapping("/calendar")
 public class CalenderController {
 
   private final CalenderService calenderService;
@@ -24,14 +24,14 @@ public class CalenderController {
     this.calenderService = calenderService;
   }
 
-  @GetMapping()
-  public String calender(
+  @SessionScope
+  @GetMapping("")
+  public String getCalendar(
       Model model,
       @RequestParam(name = "year", required = false) Integer year,
       @RequestParam(name = "month", required = false) Integer month) {
     Optional<Integer> optionalYear = Optional.ofNullable(year);
     Optional<Integer> optionalMonth = Optional.ofNullable(month);
-    Map<Integer, List<ViewDate>> dateWithWeekList;
 
     int y;
     int m;
@@ -39,24 +39,22 @@ public class CalenderController {
     if(optionalYear.isPresent() && optionalMonth.isPresent()) {
       y = optionalYear.get();
       m = optionalMonth.get();
-    }else if(optionalYear.isPresent()){
-      y = optionalYear.get();
-      m = YearMonth.of(y, 1).getMonthValue();
-    }else if(optionalMonth.isPresent()){
-      y = optionalMonth.get();
-      m = Year.now().getValue();
-    }else {
-      y = Year.now().getValue();
-      m = YearMonth.of(y, 1).getMonthValue();
+    } else {
+      LocalDate today = LocalDate.now();
+      y = today.getYear();
+      m = today.getMonthValue();
     }
-    dateWithWeekList = calenderService.getMonth(y, m).get();
 
-    model.addAttribute("dates", dateWithWeekList);
+    List<Pair<Integer, List<ViewDate>>> weekBasedViewDates = calenderService.getWeekSequences(
+        calenderService.getMonth(y,m)
+    );
+
+    model.addAttribute("dates", weekBasedViewDates);
+    model.addAttribute("title", getMonth(m)+" "+y);
     model.addAttribute("year", y);
     model.addAttribute("month", m);
-    model.addAttribute("title", getMonth(m)+" "+y);
 
-    return "calender";
+    return "calendar-view";
   }
 
   public String getMonth(int month){
