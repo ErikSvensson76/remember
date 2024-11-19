@@ -16,7 +16,9 @@
     <link rel="stylesheet" href="webjars/bootstrap/5.3.3/css/bootstrap.min.css">
     <title>${title}</title>
 </head>
+<html>
 <body>
+
 <div class="container">
     <div class="card bg-white">
         <div class="card-header">
