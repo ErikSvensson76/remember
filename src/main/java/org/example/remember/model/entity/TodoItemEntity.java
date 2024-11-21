@@ -6,20 +6,22 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "todo_items")
+@Table(name = EntityUtils.TODO_ITEM_TABLE)
 public class TodoItemEntity extends AuditEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  @Column(name = "pk_todo_item", updatable = false)
+  @Column(name = EntityUtils.TODO_ITEM_ID, updatable = false)
   private String id;
-  @Column(name = "title")
+  @Column(name = EntityUtils.TODO_ITEM_TITLE)
   private String title;
-  @Column(name = "description")
+  @Column(name = EntityUtils.TODO_ITEM_DESCRIPTION)
   private String description;
-  @Column(name = "priority")
+  @Column(name = EntityUtils.TODO_ITEM_PRIORITY)
   private Integer priority;
-  @Column(name = "dead_line")
+  @Column(name = EntityUtils.TODO_ITEM_DEADLINE)
   private LocalDateTime deadLine;
+  @Column(name = EntityUtils.TODO_ITEM_DONE)
+  private boolean done;
 
   public TodoItemEntity() {
   }
@@ -28,16 +30,37 @@ public class TodoItemEntity extends AuditEntity {
     this.id = id;
   }
 
-  public TodoItemEntity(String id, String title, String description, Integer priority, LocalDateTime deadLine) {
+  public TodoItemEntity(
+      String id,
+      String title,
+      String description,
+      Integer priority,
+      LocalDateTime deadLine,
+      boolean done
+  ) {
     this.id = id;
     this.title = title;
     this.description = description;
     this.priority = priority;
     this.deadLine = deadLine;
+    this.done = done;
   }
 
-  public TodoItemEntity(String title, String description, Integer priority, LocalDateTime deadLine) {
-    this(null, title, description, priority, deadLine);
+  public TodoItemEntity(
+      String title,
+      String description,
+      Integer priority,
+      LocalDateTime deadLine
+  ) {
+    this(null, title, description, priority, deadLine, false);
+  }
+
+  public boolean isDone() {
+    return done;
+  }
+
+  public void setDone(boolean done) {
+    this.done = done;
   }
 
   public String getId() {
