@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @AutoConfigureTestEntityManager
@@ -41,7 +42,7 @@ class TodoItemServiceTest {
     assertEquals(item.getDescription(), persisted.getDescription());
     assertEquals(item.getPriority(), persisted.getPriority());
     assertNotNull(item.getCreatedAt());
-    assertNull(item.getUpdatedAt());
+    assertNotNull(item.getUpdatedAt());
   }
 
   @Test

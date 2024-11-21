@@ -10,9 +10,6 @@ spring:
     hibernate:
       ddl-auto: create
     open-in-view: false
-  threads:
-    virtual:
-      enabled: true
 server:
   port: 8080
 management:
@@ -23,3 +20,6 @@ management:
   endpoint:
     shutdown:
       enabled: true
+gg:
+  jte:
+    development-mode: true
