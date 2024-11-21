@@ -68,6 +68,7 @@ class TodoItemServiceTest {
     persisted.setDeadLine(LocalDateTime.now().plusHours(3));
     persisted.setCreatedAt(entity.getCreatedAt());
     persisted.setUpdatedAt(entity.getUpdatedAt());
+    persisted.setDone(true);
 
 
     TodoItemEntity update = underTest.save(persisted);
@@ -81,10 +82,7 @@ class TodoItemServiceTest {
     assertEquals(persisted.getPriority(), update.getPriority());
     assertEquals(persisted.getCreatedAt(), update.getCreatedAt());
     assertNotNull(update.getUpdatedAt());
-
-
-
-
+    assertTrue(update.isDone(), "done should be true");
   }
 
 
